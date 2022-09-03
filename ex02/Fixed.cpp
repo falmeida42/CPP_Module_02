@@ -20,8 +20,7 @@ Fixed::Fixed(const float &copy) {
 }
 
 Fixed& Fixed::operator=(Fixed const &other) {
-   std::cout << "Copy assignment operator called" << std::endl;
-   
+   std::cout << "Assigment constructor called" << std::endl;
    if (this != &other)
     this->fixed_points = other.getRawBits();
    return (*this);
@@ -70,6 +69,44 @@ float   Fixed::operator/(Fixed const &other) const {
 std::ostream& operator<<(std::ostream& os, Fixed const &other) {
    os << other.toFloat();
    return os;
+}
+
+Fixed&   Fixed::operator++() {
+   ++this->fixed_points;
+    return (*this);
+}
+
+Fixed   Fixed::operator++(int) {
+    Fixed old = *this;
+    operator++();
+    return (old);
+}
+
+Fixed&   Fixed::operator--() {
+    --this->fixed_points;
+    return (*this);
+}
+
+Fixed   Fixed::operator--(int) {
+    Fixed old = *this;
+    --this->fixed_points;
+    return (old);
+}
+
+Fixed  Fixed::min( Fixed &a,  Fixed &b) {
+    return(a.fixed_points >= b.fixed_points ? b : a);
+}
+
+Fixed  Fixed::max( Fixed &a,  Fixed &b) {
+    return(a.fixed_points >= b.fixed_points ? a : b);
+}
+
+Fixed  const &Fixed::min(Fixed const&a, Fixed const&b) {
+    return(a.fixed_points >= b.fixed_points ? b : a);
+}
+
+Fixed  const &Fixed::max(Fixed const&a, Fixed const&b) {
+    return(a.fixed_points >= b.fixed_points ? a : b);
 }
 
 int Fixed::getRawBits( void ) const {
